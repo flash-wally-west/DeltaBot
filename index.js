@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-const bot = new Discord.Client();
+const {Client,Intents} = require('discord.js');
+const bot = new Discord.Client({intents:[Intents.FLAGS.GUILDS,Intents.FLAGS.GUILD_MESSAGES,Intents.FLAGS.GUILD_MESSAGE_REACTIONS],partials:['MESSAGE','CHANNEL','REACTION']});
 const fs = require("fs");
 
 bot.commands= new Discord.Collection();
