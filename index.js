@@ -123,7 +123,21 @@ bot.on('message', async message =>{
     if(message.content == 'Hi'){
         message.reply("Hello World!");
     }
-})
+});
+
+client.on('voiceStateUpdate',(oldMember,newMember) => {
+    const vc_alert_channel = client.channels.cache.find(channel => channel.name === 'vc-alert');
+    vc_alert_channel.send(`voice state update`);
+    let newUserChannel = newMember.voice.channel;
+    let oldUserChannel = oldMember.voice.channel;
+    
+
+    if(oldUserChannel === undefined && newUserChannel !== undefined){
+        vc_alert_channel.send(`${user.tag} joined VC ${newUserChannel}`);
+    } else if(newUserChannel === undefined){
+        vc_alert_channel.send(`${user.tag} left VC ${oldUserChannel}`);
+    }
+});
 
 bot.on('messageReactionAdd', async (reaction, user) => {
 	// When we receive a reaction we check if the reaction is partial or not
